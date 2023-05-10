@@ -1,8 +1,6 @@
 <template>
   <div id="demo">
-    <button @click="show = !show">
-      Toggle
-    </button>
+    <button @click="show = !show">Toggle</button>
     <transition name="fade">
       <p v-if="show">hello</p>
     </transition>
@@ -13,9 +11,9 @@
 export default {
   data() {
     return {
-      show: true
+      show: true,
     };
-  }
+  },
 };
 </script>
 
@@ -24,7 +22,8 @@ export default {
 .fade-leave-active {
   transition: opacity 0.5s;
 }
-.fade-enter, .fade-leave-to {
+.fade-enter,
+.fade-leave-to {
   opacity: 0;
 }
 </style>
