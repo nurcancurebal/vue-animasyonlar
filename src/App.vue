@@ -1,11 +1,13 @@
 <template>
-  <div id="demo">
-    <button @click="show = !show">Toggle show</button>
-    <transition name="bounce">
-      <p
-        v-if="show"
-      >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris facilisis enim libero, at lacinia diam fermentum id. Pellentesque habitant morbi tristique senectus et netus.</p>
-    </transition>
+  <div id="app">
+    <button @click="shuffle">shuffle</button>
+    <button @click="add">add</button>
+    <button @click="remove">remove</button>
+    <transition-group name="list" tag="p">
+      <span v-for="item in items" :key="item" class="list-item">{{
+        item
+      }}</span>
+    </transition-group>
   </div>
 </template>
 
@@ -13,28 +15,43 @@
 export default {
   data() {
     return {
-      show: true
+      items: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      nextNum: 10,
     };
-  }
+  },
+  methods: {
+    randomIndex() {
+      return Math.floor(Math.random() * this.items.length);
+    },
+    add() {
+      this.items.splice(this.randomIndex(), 0, this.nextNum++);
+    },
+    remove() {
+      this.items.splice(this.randomIndex(), 1);
+    },
+    shuffle() {
+      this.items.sort(() => Math.random() - 0.5);
+      console.log(this.items);
+    },
+  },
 };
 </script>
 
 <style>
-.bounce-enter-active {
-  animation: bounce-in 0.5s;
+.list-item {
+  display: inline-block;
+  margin-right: 25px;
 }
-.bounce-leave-active {
-  animation: bounce-in 0.5s reverse;
+.list-enter-active,
+.list-leave-active {
+  transition: all 2s;
 }
-@keyframes bounce-in {
-  0% {
-    transform: scale(0);
-  }
-  50% {
-    transform: scale(1.5);
-  }
-  100% {
-    transform: scale(1);
-  }
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(30px);
+}
+.list-move {
+  transition: transform 1s;
 }
 </style>
